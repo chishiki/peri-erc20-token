@@ -3,16 +3,17 @@
 
 pragma solidity ^0.8.3;
 import "./IERC20Metadata.sol";
+import "./Ownable.sol";
 
 // We are using the built-in solidity overflow protection, but for underflow we are not, so that we can use custom error messages.
 
-contract ERC20 is IERC20Metadata {
+contract PERI is IERC20Metadata, Ownable {
 
     uint256                                           internal  _totalSupply;
     mapping (address => uint256)                      internal  _balanceOf;
     mapping (address => mapping (address => uint256)) internal  _allowance;
     string                                            public override name = "PERIHELION TEST TOKEN";
-    string                                            public override symbol = "PER1";
+    string                                            public override symbol = "PERI";
     uint8                                             public override decimals = 18;
 
     constructor(string memory name_, string memory symbol_, uint8 decimals_) {
@@ -98,7 +99,7 @@ contract ERC20 is IERC20Metadata {
     }
 
     // public mint function that exposes _mint()
-    function mint(address recipient, uint amount) public {
+    function mint(address recipient, uint amount) public onlyOwner {
         _mint(recipient, amount);
     }
 
